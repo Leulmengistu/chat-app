@@ -19,7 +19,6 @@ export const sendMessage = async(req,res)=>{
                         message
                 })
                 
-                console.log("newMessage_Id: ", newMessage)
                 if (newMessage){
                         conversation.messages.push(newMessage._id)       
                 }

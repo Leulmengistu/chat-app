@@ -1,17 +1,34 @@
-import React from 'react'
+import React,{useEffect} from 'react';
+import { useAuthContext } from '../../context/AuthContext';
+import useConversation from '../../zustand/useConversation';
+import { extractTime } from '../../utils/extractTime';
 
-function Message() {
+function Message({message}) {
+
+  const {authUser} = useAuthContext();
+  const {selectedConversations} = useConversation();
+  const fromMe =  authUser._id === message.senderId;
+  console.log("User _id: ",authUser._id)
+  console.log("reciverId: ",selectedConversations._id)
+  const chatClassName = fromMe?'chat-end':'chat-start';
+  console.log("fromMe: ",fromMe)
+  const profilePic = fromMe?authUser.profilePic:selectedConversations?.profilePic;
+  const bubbleBackground = fromMe?"bg-slate-900":'bg-sky-500';
+  console.log("Profile pic: ",profilePic)
   return (
-    <div className='chat chat-end '>
+    <div className={`chat ${chatClassName}`}>
         <div className='chat-image avatar'>
             <div className='w-10 rounded-full'>
-                <img src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?w=740&t=st=1711524836~exp=1711525436~hmac=f8f5e6cb763f65417dd6bb44b28608051b52fbdd44524a3bd41fe6524ae4d2c0" 
+                <img src={profilePic} 
                     alt="User Image" />
             </div>
         </div>
 
-        <div className='chat-bubble text-white bg-blue-500'>
-            Whatzzzzz up!
+        <div className={`chat-bubble text-white ${bubbleBackground}`}>
+              {message.message}
+        </div>
+        <div className=' chat-footer flex gap-1 items-center opacity-50 text-xs text-slate-200 pb-1'>
+          {extractTime(message.createdAt)}
         </div>
     </div>
   )

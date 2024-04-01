@@ -1,20 +1,23 @@
 import React, { useEffect } from 'react'
 import useConversation from '../../zustand/useConversation';
 import { useSocketContext } from '../../context/SocketContext';
+import { useAuthContext } from '../../context/AuthContext';
 
 function Conversation(props) {
 
 const {selectedConversations,setSelectedConversations} = useConversation();
 const {onlineUsers} = useSocketContext();
+const {authUser} = useAuthContext()
 
   const isOnline = onlineUsers.includes(props.conversation._id)
   onlineUsers?.map(user=>{
     console.log("user: ",user)
   })
   const isSelected = selectedConversations?._id == props.conversation._id;
-  console.log("ISONLINE: ",isOnline)
+  console.log("ISONLINEeeeee: ",isOnline)
   console.log("props.coversations_id : ",props.conversation._id)
   console.log('onlineusersa: ',onlineUsers)
+  console.log("AUTH: ",authUser)
 
   return (
   <>

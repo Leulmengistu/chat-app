@@ -18,10 +18,6 @@ const __dirName = path.resolve();
 app.use(express.json());
 app.use(cookieParser())
 
-app.get('/',(req,res)=>{
-    //root route => http://localhost:PORT
-    res.send("Hello world");
-})
 
 app.use('/api/auth',authRoutes);
 app.use('/api/messages',messageRoutes);
